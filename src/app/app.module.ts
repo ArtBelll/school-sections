@@ -5,6 +5,8 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {TestComponent} from './test/test.component';
 import {AppRoutingModule} from './routing/app-routing.module';
+import {SectionService} from './dao/section.service';
+import {StudentService} from './dao/student.service';
 
 
 @NgModule({
@@ -16,7 +18,10 @@ import {AppRoutingModule} from './routing/app-routing.module';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    SectionService,
+    StudentService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
