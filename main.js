@@ -1,49 +1,27 @@
-const { app, BrowserWindow, dialog } = require('electron');
-const log = require('simple-node-logger').createSimpleLogger('project.log');
-
-let mainWindow;
-
+"use strict";
+exports.__esModule = true;
+var electron_1 = require("electron");
+var SimpleNodeLogger = require('simple-node-logger'), logOpts = {
+    logFilePath: 'project.log',
+    timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
+}, log = require('simple-node-logger').createSimpleLogger(logOpts);
 function createWindow() {
-
-  mainWindow = new BrowserWindow({
-    width: 600,
-    height: 600,
-    backgroundColor: '#fff',
-    // TODO: icon: `file://${__dirname}/dist/assets/logo.png`
-  });
-
-  mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
-
-  mainWindow.webContents.openDevTools();
-
-  mainWindow.on('close', function () {
-    mainWindow = null;
-  });
-
-  log.info('Try connection to DB');
-  const session = require('knex')({
-    client: 'sqlite3',
-    connection: {
-      filename: `./data.db`
-    },
-    useNullAsDefault: true
-  });
-
-  session.schema.hasTable('sections')
-    .then(exists => {
-      if (!exists) {
-        log.error("Connection failed");
-        dialog.showErrorBox('Application Error', 'Database connection error');
-        process.exit(1);
-      }
-      else {
-        log.info("Connection success!");
-      }
+    var mainWindow = new electron_1.BrowserWindow({
+        width: 600,
+        height: 600,
+        backgroundColor: '#fff'
+    });
+    mainWindow.maximize();
+    mainWindow.loadURL("file://" + __dirname + "/dist/index.html");
+    mainWindow.webContents.openDevTools();
+    mainWindow.on('close', function () {
+        mainWindow = null;
+    });
+    electron_1.ipcMain.on('test-insert', function (event, section) {
+        log.info(console.log(section));
     });
 }
-
-app.on('ready', createWindow);
-
-app.on('window-all-close', function () {
-  app.quit();
+electron_1.app.on('ready', createWindow);
+electron_1.app.on('window-all-closed', function () {
+    electron_1.app.quit();
 });

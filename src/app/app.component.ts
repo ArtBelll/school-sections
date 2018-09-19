@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {SectionService} from './dao/section.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private sectionService: SectionService) {
+  }
+
+  testInsert(): void {
+    this.sectionService.testInsert();
+  }
+
 }
