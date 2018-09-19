@@ -7,10 +7,12 @@
     "ng": "ng",
     "start": "ng build --base-href ./ && tsc main.ts && electron .",
     "build": "ng build --prod",
+    "build-dev": "ng build -a database && ng build -a angular",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "tsc main.ts && electron ."
+    "electron": "tsc main.ts && electron .",
+    "build-electron": "tsc main.ts && npm run build-dev && electron ."
   },
   "private": true,
   "dependencies": {
