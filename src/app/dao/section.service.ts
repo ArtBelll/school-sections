@@ -7,6 +7,6 @@ declare var electron: any;
 export class SectionService {
 
   public testInsert(): void {
-    electron.ipcRenderer.send('test-insert', new Section('Test', false));
+    electron.ipcRenderer.send('sections-insert', new Section('Test', false));
   }
 }

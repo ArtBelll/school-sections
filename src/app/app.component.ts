@@ -13,6 +13,7 @@ export class AppComponent {
   }
 
   testInsert(): void {
+    console.log("Insert");
     this.sectionService.testInsert();
   }
 
