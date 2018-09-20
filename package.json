@@ -7,12 +7,7 @@
     "ng": "ng",
     "start": "ng build --base-href ./ && tsc main.ts && electron .",
     "build": "ng build --prod",
-    "build-dev": "ng build -a database && ng build -a angular",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "electron": "tsc main.ts && electron .",
-    "build-electron": "tsc main.ts && npm run build-dev && electron ."
+    "electron": "tsc main.ts && electron ."
   },
   "private": true,
   "dependencies": {
@@ -25,6 +20,7 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@types/knex": "^0.14.24",
     "core-js": "^2.4.1",
     "knex": "^0.15.2",
     "rxjs": "^5.5.6",
@@ -36,6 +32,7 @@
     "@angular/cli": "~1.7.4",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
+    "@types/bluebird": "^3.5.5",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",

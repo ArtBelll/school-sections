@@ -45,3 +45,8 @@ Thumbs.db
 
 data.db
 project.log
+
+#generate js
+main.js
+logs-setting.js
+/database/**/*.js
