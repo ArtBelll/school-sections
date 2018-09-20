@@ -1,28 +1,41 @@
 import {app, BrowserWindow, dialog, ipcMain} from 'electron';
 import {Database} from './database/database';
 
-function createWindow() {
-  new Database(`${__dirname}/data.db`);
+class SchoolSectionsApp {
 
-  let mainWindow = new BrowserWindow({
-    width: 600,
-    height: 600,
-    backgroundColor: '#fff',
-    icon: `file://${__dirname}/dist/view/favicon.ico`
-  });
+  mainWindow: BrowserWindow;
 
-  mainWindow.maximize();
-  mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
-  mainWindow.webContents.openDevTools();
+  constructor() {
+    this.mainWindow = this.createWindow();
+    this.connectionToDataBase()
+  }
 
-  ipcMain.on('test-insert', (event, section) => {
-    console.log("TT");
-  });
+  private createWindow(): BrowserWindow {
+    const mainWindow = new BrowserWindow({
+      width: 600,
+      height: 600,
+      backgroundColor: '#fff',
+      icon: `file://${__dirname}/dist/view/favicon.ico`
+    });
 
+    mainWindow.maximize();
+    mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
+    mainWindow.webContents.openDevTools();
+
+    return mainWindow;
+  }
+
+  private connectionToDataBase() {
+    new Database(`${__dirname}/data.db`);
+  }
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => new SchoolSectionsApp());
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
   app.quit();
 });
+
+// ipcMain.on('test-insert', (event, section) => {
+//   console.log("TT");
+// });
