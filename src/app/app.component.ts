@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SectionService} from './dao/section.service';
+import {SectionService} from './client/section.service';
+import {Section} from '../../database/domain/section';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,14 @@ export class AppComponent {
 
   testInsert(): void {
     console.log("Insert");
-    this.sectionService.testInsert();
+    this.sectionService.add(new Section("Hello", false));
+  }
+
+  testGetAllSections() {
+    console.log("Select");
+    this.sectionService.getAll().subscribe((sections: Section[]) => {
+      console.log(sections);
+    });
   }
 
 }
