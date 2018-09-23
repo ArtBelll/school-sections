@@ -2,24 +2,27 @@ import * as Knex from 'knex';
 import {ipcMain} from 'electron';
 import {log} from '../../logs-setting';
 import {Section} from '../domain/section';
+import {SectionChannel} from '../../commons/channel/section-channel';
 
 export class SectionDao {
 
-  static readonly TABLE = 'sections';
-  static readonly PREFIX = `sections-`;
-
-  session: Knex;
+  private session: Knex;
+  private sectionChannel: SectionChannel;
+  private tableName: string;
 
   constructor(session: Knex) {
     this.session = session;
+    this.sectionChannel = new SectionChannel();
+    this.tableName = this.sectionChannel.getTableName();
     this.initInsert();
     this.initSelectAllSections();
   }
 
   initInsert() {
-    ipcMain.on(`${SectionDao.PREFIX}insert`, (event, section) => {
+    const channel = this.sectionChannel.channelInsert();
+    ipcMain.on(channel.send, (event, section) => {
       log.info('Insert section:', JSON.stringify(section));
-      this.session.insert(section, 'id').into(SectionDao.TABLE).then(() => {
+      this.session.insert(section, 'id').into(this.tableName).then(() => {
         log.info('Insert successful');
       })
         .catch(err => {
@@ -29,11 +32,12 @@ export class SectionDao {
   }
 
   initSelectAllSections() {
-    ipcMain.on(`${SectionDao.PREFIX}get-all`, (event) => {
+    const channel = this.sectionChannel.channelGetAll();
+    ipcMain.on(channel.send, (event) => {
       this.session.select('*')
-        .from(SectionDao.TABLE)
+        .from(this.tableName)
         .then((sections: Section[]) => {
-          event.sender.send('sections:get-all:on', sections);
+          event.sender.send(channel.on, sections);
         });
     });
   }
