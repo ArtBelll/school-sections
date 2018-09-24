@@ -21,4 +21,11 @@ export class MainComponent implements OnInit {
       .subscribe(() => {
       });
   }
+
+  testGetAll() {
+    console.log('Get all');
+    this.studentService.getAll().subscribe(students => {
+      console.log(students);
+    });
+  }
 }

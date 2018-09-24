@@ -2,6 +2,7 @@ import {ipcMain} from 'electron';
 import {log} from '../../logs-setting';
 import {AbstractChannel} from '../../commons/channel/abstract-channel';
 import * as Knex from 'knex';
+import {Section} from '../../commons/domain/section';
 
 export abstract class AbstractDao {
 
@@ -13,7 +14,7 @@ export abstract class AbstractDao {
 
   protected initCommonChannels() {
     this.initInsert();
-    // this.initSelectAllSections();
+    this.initSelectAll();
   }
 
   protected abstract getChannel(): AbstractChannel;
@@ -28,13 +29,26 @@ export abstract class AbstractDao {
 
   private initInsert() {
     const channel = this.getChannel().channelInsert();
-    ipcMain.on(channel.send, (event, section) => {
-      log.info('Insert section:', JSON.stringify(section));
-      this.session.insert(section, 'id').into(this.getTableName()).then(() => {
-        log.info('Insert successful');
-      })
+    ipcMain.on(channel.send, (event, value) => {
+      log.info('Insert section:', JSON.stringify(value));
+      this.session.insert(value, 'id')
+        .into(this.getTableName())
+        .then(() => {
+          log.info('Insert successful');
+        })
         .catch(err => {
           log.error('Insert error', err);
+        });
+    });
+  }
+
+  private initSelectAll() {
+    const channel = this.getChannel().channelGetAll();
+    ipcMain.on(channel.send, (event) => {
+      this.session.select('*')
+        .from(this.getChannel().getTableName())
+        .then((values) => {
+          event.sender.send(channel.on, values);
         });
     });
   }
