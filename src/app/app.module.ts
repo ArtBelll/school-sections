@@ -9,6 +9,8 @@ import {StudentService} from './client/student.service';
 import {MainComponent} from './components/main/main.component';
 import {DbClient} from './client/db-client';
 
+import {MatTableModule} from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import {DbClient} from './client/db-client';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatTableModule
   ],
   providers: [
     SectionService,
