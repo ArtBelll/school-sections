@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SectionService} from '../../client/section.service';
-import {Section} from '../../../../database/domain/section';
+
 
 @Component({
   selector: 'app-root',
