@@ -1,7 +1,7 @@
 import * as Knex from 'knex';
 import {ipcMain} from 'electron';
 import {log} from '../../logs-setting';
-import {Section} from '../domain/section';
+import {Section} from '../../commons/domain/section';
 import {SectionChannel} from '../../commons/channel/section-channel';
 
 export class SectionDao {

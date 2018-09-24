@@ -4,7 +4,7 @@ export class Section {
   name: string;
   isSport: boolean;
 
-  constructor(name: string, isSport) {
+  constructor(name: string, isSport: boolean) {
     this.name = name;
     this.isSport = isSport;
   }

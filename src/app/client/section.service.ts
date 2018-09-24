@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Section} from '../../../database/domain/section';
+import {Section} from '../../../commons/domain/section';
 import {Observable} from 'rxjs/Observable';
 import {SectionChannel} from '../../../commons/channel/section-channel';
 import 'rxjs/add/operator/first';
@@ -48,7 +48,7 @@ export class SectionService {
           electron.ipcRenderer.removeListener(channel.on, successListener);
           electron.ipcRenderer.removeListener(channel.error, errorListener);
         }
-      }
-    })
+      };
+    });
   }
 }

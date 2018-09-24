@@ -1,6 +1,6 @@
 import Knex = require('knex');
 import {dialog} from 'electron';
-import {log} from '../../logs-setting';
+import {log} from '../logs-setting';
 
 export abstract class SessionCreator {
 
@@ -17,12 +17,12 @@ export abstract class SessionCreator {
     session.schema.hasTable('sections')
       .then(exists => {
         if (!exists) {
-          log.error("Connection failed");
+          log.error('Connection failed');
           dialog.showErrorBox('Application Error', 'Database connection error');
           process.exit(1);
         }
         else {
-          log.info("Connection success!");
+          log.info('Connection success!');
         }
       });
 

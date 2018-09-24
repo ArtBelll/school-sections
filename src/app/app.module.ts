@@ -6,7 +6,8 @@ import {AppComponent} from './components/app/app.component';
 import {AppRoutingModule} from './routing/app-routing.module';
 import {SectionService} from './client/section.service';
 import {StudentService} from './client/student.service';
-import { MainComponent } from './components/main/main.component';
+import {MainComponent} from './components/main/main.component';
+import {DbClient} from './client/db-client';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { MainComponent } from './components/main/main.component';
   ],
   providers: [
     SectionService,
-    StudentService
+    StudentService,
+    DbClient
   ],
   bootstrap: [AppComponent]
 })
