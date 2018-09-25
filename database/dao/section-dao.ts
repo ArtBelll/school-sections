@@ -1,44 +1,41 @@
 import * as Knex from 'knex';
 import {ipcMain} from 'electron';
 import {log} from '../../logs-setting';
-import {Section} from '../../commons/domain/section';
 import {SectionChannel} from '../../commons/channel/section-channel';
+import {AbstractDao} from './abstract-dao';
+import {AbstractChannel} from '../../commons/channel/abstract-channel';
 
-export class SectionDao {
+export class SectionDao extends AbstractDao {
 
-  private session: Knex;
-  private sectionChannel: SectionChannel;
-  private tableName: string;
+  private readonly sectionChannel: SectionChannel;
 
   constructor(session: Knex) {
-    this.session = session;
+    super(session);
     this.sectionChannel = new SectionChannel();
-    this.tableName = this.sectionChannel.getTableName();
-    this.initInsert();
-    this.initSelectAllSections();
+    this.initCommonChannels();
+    this.initGetSectionsByStudent();
   }
 
-  initInsert() {
-    const channel = this.sectionChannel.channelInsert();
-    ipcMain.on(channel.send, (event, section) => {
-      log.info('Insert section:', JSON.stringify(section));
-      this.session.insert(section, 'id').into(this.tableName).then(() => {
-        log.info('Insert successful');
-      })
+  private initGetSectionsByStudent() {
+    const channel = this.sectionChannel.channelGetSections;
+    ipcMain.on(channel.send, (event, studentId, msgId) => {
+      return this.getSession().select('sections.id', 'sections.name', 'sections.isSport')
+        .from('sections')
+        .join('section_student', function () {
+          this.on('sections.id', 'section_student.sectionId');
+        })
+        .where('section_student.studentId', studentId)
+        .then(section => {
+          event.sender.send(channel.on + ':' + msgId, section);
+        })
         .catch(err => {
-          log.error('Insert error', err);
+          log.error(err);
+          event.sender.send(channel.error, err);
         });
     });
   }
 
-  initSelectAllSections() {
-    const channel = this.sectionChannel.channelGetAll();
-    ipcMain.on(channel.send, (event) => {
-      this.session.select('*')
-        .from(this.tableName)
-        .then((sections: Section[]) => {
-          event.sender.send(channel.on, sections);
-        });
-    });
+  protected getChannel(): AbstractChannel {
+    return this.sectionChannel;
   }
 }

@@ -51,3 +51,4 @@ main.js
 logs-setting.js
 /database/**/*.js
 /commons/**/*.js
+*.map

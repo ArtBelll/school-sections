@@ -1,4 +1,11 @@
-<p (click)="testInsert()">
+<p>
   main works!
 </p>
-<h1 (click)="testGetAll()">Test get all</h1>
+<h1>Test get all</h1>
+<h2 *ngFor='let student of students | async'>
+  {{student.firstName }}
+  <div *ngFor='let section of student.sections'>
+    {{section.name}}
+  </div>
+</h2>
+<!--<h2 *ngIf="students" >{{students}}</h2>-->

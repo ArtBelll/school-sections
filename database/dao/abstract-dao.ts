@@ -28,7 +28,7 @@ export abstract class AbstractDao {
   }
 
   private initInsert() {
-    const channel = this.getChannel().channelInsert();
+    const channel = this.getChannel().channelInsert;
     ipcMain.on(channel.send, (event, value) => {
       log.info('Insert section:', JSON.stringify(value));
       this.session.insert(value, 'id')
@@ -43,12 +43,12 @@ export abstract class AbstractDao {
   }
 
   private initSelectAll() {
-    const channel = this.getChannel().channelGetAll();
-    ipcMain.on(channel.send, (event) => {
+    const channel = this.getChannel().channelGetAll;
+    ipcMain.on(channel.send, (event, arg, msgId) => {
       this.session.select('*')
         .from(this.getChannel().getTableName())
         .then((values) => {
-          event.sender.send(channel.on, values);
+          event.sender.send(channel.on + ':' + msgId, values);
         });
     });
   }

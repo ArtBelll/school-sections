@@ -1,54 +1,29 @@
 import {Injectable} from '@angular/core';
 import {Section} from '../../../commons/domain/section';
-import {Observable} from 'rxjs/Observable';
 import {SectionChannel} from '../../../commons/channel/section-channel';
-import 'rxjs/add/operator/first';
+import {DbClient} from './db-client';
+import {Observable} from 'rxjs/Observable';
+import {Student} from '../../../commons/domain/student';
 
-declare var electron: any;
 
 @Injectable()
 export class SectionService {
 
   private sectionChannel: SectionChannel;
 
-  private getAllObservable: Observable<Section[]>;
-
-  constructor() {
+  constructor(private dbClient: DbClient) {
     this.sectionChannel = new SectionChannel();
-
-    this.setGetAllObservable();
   }
 
-  public add(section: Section): void {
-    electron.ipcRenderer.send(this.sectionChannel.channelInsert().send, section);
+  public add(section: Section): Observable<void> {
+    return this.dbClient.do(this.sectionChannel.channelInsert, section);
   }
 
   public getAll(): Observable<Section[]> {
-    return this.getAllObservable.first();
+    return this.dbClient.do(this.sectionChannel.channelGetAll);
   }
 
-  private setGetAllObservable(): void {
-    this.getAllObservable = new Observable(observer => {
-      const channel = this.sectionChannel.channelGetAll();
-
-      const successListener = (event, value) => {
-        observer.next(value);
-      };
-      const errorListener = (event, errorMessage) => {
-        console.log(errorMessage);
-        observer.error(errorMessage);
-      };
-
-      electron.ipcRenderer.send(channel.send);
-      electron.ipcRenderer.on(channel.on, successListener);
-      electron.ipcRenderer.on(channel.error, errorListener);
-
-      return {
-        unsubscribe() {
-          electron.ipcRenderer.removeListener(channel.on, successListener);
-          electron.ipcRenderer.removeListener(channel.error, errorListener);
-        }
-      };
-    });
+  public getSectionsByStudent(studentId: number): Observable<Section[]> {
+    return this.dbClient.do<Section[]>(this.sectionChannel.channelGetSections, studentId);
   }
 }

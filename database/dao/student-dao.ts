@@ -2,8 +2,6 @@ import * as Knex from 'knex';
 import {StudentChannel} from '../../commons/channel/student-channel';
 import {AbstractDao} from './abstract-dao';
 import {AbstractChannel} from '../../commons/channel/abstract-channel';
-import {ipcMain} from 'electron';
-import {Section} from '../../commons/domain/section';
 
 export class StudentDao extends AbstractDao {
 

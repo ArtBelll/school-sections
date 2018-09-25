@@ -14,7 +14,7 @@ export class MethodChannel {
     this.error = this.getChannelName('error');
   }
 
-  private getChannelName(event: string) {
+  protected getChannelName(event: string) {
     return `${this.table}:${this.method}:${event}`;
   }
 }

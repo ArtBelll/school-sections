@@ -8,6 +8,7 @@ import {SectionService} from './client/section.service';
 import {StudentService} from './client/student.service';
 import {MainComponent} from './components/main/main.component';
 import {DbClient} from './client/db-client';
+import {NgxElectronModule} from 'ngx-electron';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {DbClient} from './client/db-client';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxElectronModule
   ],
   providers: [
     SectionService,
