@@ -10,6 +10,8 @@ import {MainComponent} from './components/main/main.component';
 import {DbClient} from './client/db-client';
 import {NgxElectronModule} from 'ngx-electron';
 
+import {MatTableModule} from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import {NgxElectronModule} from 'ngx-electron';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxElectronModule
+    NgxElectronModule,
+    MatTableModule
   ],
   providers: [
     SectionService,
