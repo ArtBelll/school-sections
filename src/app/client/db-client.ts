@@ -16,7 +16,6 @@ export class DbClient {
     return new Observable<T>(observer => {
       const successListener = (event, value) => {
         this.ngZone.run(() => {
-          console.log(value);
           observer.next(value);
         });
       };

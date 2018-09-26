@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import {StudentService} from '../../client/student.service';
 import {Student} from '../../../../commons/domain/student';
 import {Observable} from 'rxjs/Observable';
@@ -9,7 +9,8 @@ import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import {MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {Section} from '../../../../commons/domain/section';
 
 @Component({
   selector: 'app-main',
@@ -18,9 +19,17 @@ import {MatTableDataSource} from '@angular/material';
 })
 export class MainComponent implements OnInit {
 
-  dataSource: MatTableDataSource<Student>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['position', 'firstName', 'lastName', 'classNumber', 'classCharacter'];
+  dataSource: MatTableDataSource<Student>;
+  displayedColumns: string[] = [
+    'position',
+    'firstName',
+    'lastName',
+    'classNumber',
+    'classCharacter',
+    'sections'
+  ];
 
   constructor(private studentService: StudentService, private sectionService: SectionService) {
   }
@@ -34,6 +43,12 @@ export class MainComponent implements OnInit {
               student.sections = sections;
             }));
         this.dataSource = new MatTableDataSource<Student>(students);
+        this.dataSource.paginator = this.paginator;
       });
+  }
+
+  joinSections(sections: Section[]): string {
+    if (!sections) return "";
+    return sections.map(section => section.name).join(', ');
   }
 }
