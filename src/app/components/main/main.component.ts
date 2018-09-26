@@ -8,6 +8,8 @@ import {SectionService} from '../../client/section.service';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-main',
@@ -16,20 +18,22 @@ import 'rxjs/add/operator/map';
 })
 export class MainComponent implements OnInit {
 
-  students: Observable<Student[]>;
+  dataSource: MatTableDataSource<Student>;
+
+  displayedColumns: string[] = ['position', 'firstName', 'lastName', 'classNumber', 'classCharacter'];
 
   constructor(private studentService: StudentService, private sectionService: SectionService) {
   }
 
   ngOnInit(): void {
-    this.students = this.studentService.getAll()
-      .map(students => {
+    this.studentService.getAll()
+      .subscribe(students => {
         students
           .map(student => this.sectionService.getSectionsByStudent(student.id)
-          .subscribe(sections => {
-            student.sections = sections;
-          }));
-        return students;
+            .subscribe(sections => {
+              student.sections = sections;
+            }));
+        this.dataSource = new MatTableDataSource<Student>(students);
       });
   }
 }

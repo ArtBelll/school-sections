@@ -1,11 +1,33 @@
-<p>
-  main works!
-</p>
-<h1>Test get all</h1>
-<h2 *ngFor='let student of students | async'>
-  {{student.firstName }}
-  <div *ngFor='let section of student.sections'>
-    {{section.name}}
-  </div>
-</h2>
-<!--<h2 *ngIf="students" >{{students}}</h2>-->
+<div class="container">
+  <button mat-flat-button>Basic</button>
+  <mat-table #table  [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef> No.</mat-header-cell >
+      <mat-cell *matCellDef="let i = index"> {{i + 1}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef> Имя</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.firstName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef> Фамилия</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="classNumber">
+      <mat-header-cell *matHeaderCellDef> Номер класса</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.classNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="classCharacter">
+      <mat-header-cell *matHeaderCellDef> Буква класса</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.classCharacter}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

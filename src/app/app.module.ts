@@ -11,6 +11,7 @@ import {DbClient} from './client/db-client';
 import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {MatTableModule} from '@angular/material/table';
     BrowserModule,
     AppRoutingModule,
     NgxElectronModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule
   ],
   providers: [
     SectionService,
