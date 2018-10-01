@@ -11,14 +11,17 @@ import {DbClient} from './client/db-client';
 import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
-import {MatButtonModule, MatPaginator, MatPaginatorModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatPaginator, MatPaginatorModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AddUserComponent, AddUserComponentDialog} from './components/add-user/add-user.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    AddUserComponent,
+    AddUserComponentDialog
   ],
   imports: [
     BrowserModule,
@@ -27,14 +30,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     SectionService,
     StudentService,
     DbClient
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddUserComponentDialog]
 })
 export class AppModule {
 }

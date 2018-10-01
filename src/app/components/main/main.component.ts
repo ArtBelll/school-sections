@@ -9,8 +9,9 @@ import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {Section} from '../../../../commons/domain/section';
+import {AddUserComponent} from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-main',
@@ -31,7 +32,9 @@ export class MainComponent implements OnInit {
     'sections'
   ];
 
-  constructor(private studentService: StudentService, private sectionService: SectionService) {
+  constructor(private studentService: StudentService,
+              private sectionService: SectionService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
