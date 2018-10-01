@@ -1,5 +1,9 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Student} from '../../../../commons/domain/student';
+import {StudentService} from '../../client/student.service';
+import {SectionService} from '../../client/section.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-add-user',
@@ -8,15 +12,35 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  @Output() added = new EventEmitter<Student>();
+
+  student = new Student();
+
+  constructor(private studentService: StudentService,
+              private sectionService: SectionService,
+              private dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
 
   showAddUserForm() {
     let dialogRef = this.dialog.open(AddUserComponentDialog, {
-      height: '400px',
-      width: '600px',
+      width: '300px',
+      position: {
+        top: '100px'
+      },
+      data: {student: this.student}
+    });
+
+    dialogRef.afterClosed().subscribe(student => {
+      this.studentService.add(student)
+        .flatMap(studentId => this.studentService.get(studentId))
+        .subscribe(result => {
+          console.log(result);
+          this.added.emit(result);
+        });
+      this.student = new Student();
     });
   }
 }
@@ -29,7 +53,8 @@ export class AddUserComponentDialog {
 
   constructor(
     public dialogRef: MatDialogRef<AddUserComponentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

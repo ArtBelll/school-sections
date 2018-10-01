@@ -1,5 +1,12 @@
 import {Section} from './section';
 
+export interface StudentInfo {
+  firstName: string;
+  lastName: string;
+  classNumber: number;
+  classCharacter: string;
+}
+
 export class Student {
   id: number;
   firstName: string;
@@ -8,11 +15,13 @@ export class Student {
   classCharacter: string;
   sections: Section[];
 
-  constructor(firstName: string, lastName: string,
-              classNumber: number, classCharacter: string) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.classNumber = classNumber;
-    this.classCharacter = classCharacter;
+  constructor(studentInfo?: StudentInfo) {
+    if (!studentInfo) {
+      return;
+    }
+    this.firstName = studentInfo.firstName;
+    this.lastName = studentInfo.lastName;
+    this.classNumber = studentInfo.classNumber;
+    this.classCharacter = studentInfo.classCharacter;
   }
 }

@@ -14,6 +14,7 @@ export abstract class AbstractDao {
 
   protected initCommonChannels() {
     this.initInsert();
+    this.initFindOne();
     this.initSelectAll();
   }
 
@@ -29,15 +30,28 @@ export abstract class AbstractDao {
 
   private initInsert() {
     const channel = this.getChannel().channelInsert;
-    ipcMain.on(channel.send, (event, value) => {
-      log.info('Insert section:', JSON.stringify(value));
+    ipcMain.on(channel.send, (event, value, msgId) => {
+      log.info('Insert:', JSON.stringify(value));
       this.session.insert(value, 'id')
         .into(this.getTableName())
-        .then(() => {
+        .then(result => {
+          event.sender.send(channel.on + ':' + msgId, result[0]);
           log.info('Insert successful');
         })
         .catch(err => {
           log.error('Insert error', err);
+        });
+    });
+  }
+
+  private initFindOne() {
+    const channel = this.getChannel().channelFindOne;
+    ipcMain.on(channel.send, (event, id, msgId) => {
+      this.session.select('*')
+        .from(this.getChannel().getTableName())
+        .where(`${this.getChannel().getTableName()}.id`, id)
+        .then(result => {
+          event.sender.send(channel.on + ':' + msgId, result[0]);
         });
     });
   }
@@ -47,7 +61,7 @@ export abstract class AbstractDao {
     ipcMain.on(channel.send, (event, arg, msgId) => {
       this.session.select('*')
         .from(this.getChannel().getTableName())
-        .then((values) => {
+        .then(values => {
           event.sender.send(channel.on + ':' + msgId, values);
         });
     });

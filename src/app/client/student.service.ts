@@ -13,9 +13,13 @@ export class StudentService {
     this.studentChannel = new StudentChannel();
   }
 
-  public add(student: Student): Observable<void> {
+  public add(student: Student): Observable<number> {
     student.classCharacter = student.classCharacter.toUpperCase();
     return this.dbClient.do(this.studentChannel.channelInsert, student);
+  }
+
+  public get(studentId: number): Observable<Student> {
+    return this.dbClient.do<Student>(this.studentChannel.channelFindOne, studentId);
   }
 
   public getAll(): Observable<Student[]> {

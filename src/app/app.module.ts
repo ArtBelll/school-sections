@@ -11,9 +11,10 @@ import {DbClient} from './client/db-client';
 import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
-import {MatButtonModule, MatDialogModule, MatPaginator, MatPaginatorModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatInputModule, MatPaginator, MatPaginatorModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddUserComponent, AddUserComponentDialog} from './components/add-user/add-user.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import {AddUserComponent, AddUserComponentDialog} from './components/add-user/ad
     MatButtonModule,
     MatPaginatorModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [
     SectionService,

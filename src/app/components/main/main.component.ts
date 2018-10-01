@@ -1,7 +1,6 @@
-import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {StudentService} from '../../client/student.service';
 import {Student} from '../../../../commons/domain/student';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/scan';
 import {SectionService} from '../../client/section.service';
@@ -9,9 +8,8 @@ import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Section} from '../../../../commons/domain/section';
-import {AddUserComponent} from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-main',
@@ -21,6 +19,7 @@ import {AddUserComponent} from '../add-user/add-user.component';
 export class MainComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('filter') filter: ElementRef;
 
   dataSource: MatTableDataSource<Student>;
   displayedColumns: string[] = [
@@ -32,9 +31,7 @@ export class MainComponent implements OnInit {
     'sections'
   ];
 
-  constructor(private studentService: StudentService,
-              private sectionService: SectionService,
-              private dialog: MatDialog) {
+  constructor(private studentService: StudentService, private sectionService: SectionService) {
   }
 
   ngOnInit(): void {
@@ -53,5 +50,11 @@ export class MainComponent implements OnInit {
   joinSections(sections: Section[]): string {
     if (!sections) return "";
     return sections.map(section => section.name).join(', ');
+  }
+
+  onAdded(student: Student) {
+    let newData = this.dataSource.data;
+    newData.unshift(student);
+    this.dataSource.data = newData;
   }
 }
