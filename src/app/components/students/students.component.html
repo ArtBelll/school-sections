@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="col-md-9">
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
+        <mat-cell *matCellDef="let i = index"> {{i + 1}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef> Имя</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef> Фамилия</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="classNumber">
+        <mat-header-cell *matHeaderCellDef> Номер класса</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.classNumber}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="classCharacter">
+        <mat-header-cell *matHeaderCellDef> Буква класса</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.classCharacter}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="sections">
+        <mat-header-cell *matHeaderCellDef> Секции</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{joinSections(element.sections)}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+  <div class="col-md-3">
+    <app-add-user (added)="onAddedStudent($event)"></app-add-user>
+    <div class="mt-2">
+      <app-add-section></app-add-section>
+    </div>
+  </div>
+</div>

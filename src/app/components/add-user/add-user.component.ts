@@ -52,7 +52,7 @@ export class AddUserComponent implements OnInit {
 
 @Component({
   selector: 'app-add-user-dialog',
-  templateUrl: './add-user-dialog.html',
+  templateUrl: '../../dialogs/add-user-dialog.html',
 })
 export class AddUserComponentDialog {
 

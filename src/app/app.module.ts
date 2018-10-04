@@ -11,11 +11,21 @@ import {DbClient} from './client/db-client';
 import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
-import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatInputModule, MatPaginator, MatPaginatorModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatInputModule,
+  MatPaginator,
+  MatPaginatorModule,
+  MatTabsModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddUserComponent, AddUserComponentDialog} from './components/add-user/add-user.component';
 import {FormsModule} from '@angular/forms';
 import {AddSectionComponent, AddSectionComponentDialog} from './components/add-section/add-section.component';
+import { StudentsComponent } from './components/students/students.component';
+import { SectionsComponent } from './components/sections/sections.component';
 
 
 @NgModule({
@@ -25,7 +35,9 @@ import {AddSectionComponent, AddSectionComponentDialog} from './components/add-s
     AddUserComponent,
     AddUserComponentDialog,
     AddSectionComponent,
-    AddSectionComponentDialog
+    AddSectionComponentDialog,
+    StudentsComponent,
+    SectionsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +50,8 @@ import {AddSectionComponent, AddSectionComponentDialog} from './components/add-s
     MatDialogModule,
     MatInputModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule
   ],
   providers: [
     SectionService,

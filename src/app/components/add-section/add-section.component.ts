@@ -26,7 +26,6 @@ export class AddSectionComponent implements OnInit {
   showAddSectionForm() {
     let dialogRef = this.dialog.open(AddSectionComponentDialog, {
       width: '300px',
-      height: '250px',
       position: {
         top: '100px'
       },
@@ -48,7 +47,7 @@ export class AddSectionComponent implements OnInit {
 
 @Component({
   selector: 'app-add-section-dialog',
-  templateUrl: './add-section-dialog.html',
+  templateUrl: '../../dialogs/add-section-dialog.html',
 })
 export class AddSectionComponentDialog {
 
