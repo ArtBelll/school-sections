@@ -48,8 +48,10 @@
       </mat-paginator>
     </div>
     <div class="col-md-3">
-      <app-add-user (added)="onAdded($event)"></app-add-user>
-      <button mat-raised-button color="primary" class="w-100 mt-2">Добавить секцию</button>
+      <app-add-user (added)="onAddedStudent($event)"></app-add-user>
+      <div class="mt-2">
+        <app-add-section></app-add-section>
+      </div>
     </div>
   </div>
 </div>

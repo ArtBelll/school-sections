@@ -15,8 +15,12 @@ export class SectionService {
     this.sectionChannel = new SectionChannel();
   }
 
-  public add(section: Section): Observable<void> {
-    return this.dbClient.do(this.sectionChannel.channelInsert, section);
+  public add(section: Section): Observable<number> {
+    return this.dbClient.do<number>(this.sectionChannel.channelInsert, section);
+  }
+
+  public get(sectionId: number): Observable<Section> {
+    return this.dbClient.do<Section>(this.sectionChannel.channelFindOne, sectionId);
   }
 
   public getAll(): Observable<Section[]> {

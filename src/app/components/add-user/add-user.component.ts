@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Student} from '../../../../commons/domain/student';
 import {StudentService} from '../../client/student.service';
-import {SectionService} from '../../client/section.service';
-import {Observable} from 'rxjs/Observable';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-add-user',
@@ -17,7 +16,6 @@ export class AddUserComponent implements OnInit {
   student = new Student();
 
   constructor(private studentService: StudentService,
-              private sectionService: SectionService,
               private dialog: MatDialog) {
   }
 
@@ -34,14 +32,21 @@ export class AddUserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(student => {
-      this.studentService.add(student)
-        .flatMap(studentId => this.studentService.get(studentId))
-        .subscribe(result => {
-          console.log(result);
-          this.added.emit(result);
-        });
+      if (this.validate(student)) {
+        this.studentService.add(student)
+          .flatMap(studentId => this.studentService.get(studentId))
+          .subscribe(result => {
+            this.added.emit(result);
+          });
+      }
       this.student = new Student();
     });
+  }
+
+  validate(student: Student): boolean {
+    return !isUndefined(student) && !isUndefined(student.firstName)
+      && !isUndefined(student.lastName) && !isUndefined(student.classNumber)
+      && !isUndefined(student.classCharacter);
   }
 }
 
@@ -57,7 +62,7 @@ export class AddUserComponentDialog {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
 }

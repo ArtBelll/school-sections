@@ -52,7 +52,7 @@ export class MainComponent implements OnInit {
     return sections.map(section => section.name).join(', ');
   }
 
-  onAdded(student: Student) {
+  onAddedStudent(student: Student) {
     let newData = this.dataSource.data;
     newData.unshift(student);
     this.dataSource.data = newData;

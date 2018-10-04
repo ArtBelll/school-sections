@@ -11,10 +11,11 @@ import {DbClient} from './client/db-client';
 import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
-import {MatButtonModule, MatDialogModule, MatInputModule, MatPaginator, MatPaginatorModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatInputModule, MatPaginator, MatPaginatorModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddUserComponent, AddUserComponentDialog} from './components/add-user/add-user.component';
 import {FormsModule} from '@angular/forms';
+import {AddSectionComponent, AddSectionComponentDialog} from './components/add-section/add-section.component';
 
 
 @NgModule({
@@ -22,7 +23,9 @@ import {FormsModule} from '@angular/forms';
     AppComponent,
     MainComponent,
     AddUserComponent,
-    AddUserComponentDialog
+    AddUserComponentDialog,
+    AddSectionComponent,
+    AddSectionComponentDialog
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import {FormsModule} from '@angular/forms';
     BrowserAnimationsModule,
     MatDialogModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule
   ],
   providers: [
     SectionService,
@@ -42,7 +46,10 @@ import {FormsModule} from '@angular/forms';
     DbClient
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddUserComponentDialog]
+  entryComponents: [
+    AddUserComponentDialog,
+    AddSectionComponentDialog
+  ]
 })
 export class AppModule {
 }
