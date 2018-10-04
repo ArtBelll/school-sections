@@ -1,3 +1,34 @@
-<p>
-  sections works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="col-md-9">
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
+        <mat-cell *matCellDef="let i = index"> {{i + 1}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Название секции</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isSport">
+        <mat-header-cell *matHeaderCellDef> Спортивная</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.isSport == 1" class="green">check</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <div class="col-md-3">
+    <app-add-section (added)="onAddedSection($event)"></app-add-section>
+  </div>
+</div>

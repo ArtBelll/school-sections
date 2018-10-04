@@ -14,7 +14,7 @@ import {MatTableModule} from '@angular/material/table';
 import {
   MatButtonModule,
   MatCheckboxModule,
-  MatDialogModule,
+  MatDialogModule, MatIconModule,
   MatInputModule,
   MatPaginator,
   MatPaginatorModule,
@@ -51,7 +51,8 @@ import { SectionsComponent } from './components/sections/sections.component';
     MatInputModule,
     FormsModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    MatIconModule
   ],
   providers: [
     SectionService,

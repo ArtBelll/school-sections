@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {SectionService} from '../../client/section.service';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {Section} from '../../../../commons/domain/section';
 
 @Component({
   selector: 'app-sections',
@@ -7,9 +10,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SectionsComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('filter') filter: ElementRef;
 
-  ngOnInit() {
+  dataSource: MatTableDataSource<Section>;
+  displayedColumns: string[] = [
+    'position',
+    'name',
+    'isSport'
+  ];
+
+  constructor(private sectionService: SectionService) {
   }
 
+  ngOnInit() {
+    this.sectionService.getAll()
+      .subscribe(sections => {
+        this.dataSource = new MatTableDataSource<Section>(sections);
+      });
+  }
+
+  onAddedSection(section: Section) {
+    let newData = this.dataSource.data;
+    newData.unshift(section);
+    this.dataSource.data = newData;
+  }
 }

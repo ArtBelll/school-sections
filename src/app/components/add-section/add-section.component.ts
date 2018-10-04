@@ -14,6 +14,8 @@ import {isUndefined} from "util";
 })
 export class AddSectionComponent implements OnInit {
 
+  @Output() added = new EventEmitter<Section>();
+
   section = new Section();
 
   constructor(private sectionService: SectionService,
@@ -34,7 +36,11 @@ export class AddSectionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(section => {
       if (this.validate(section)) {
-        this.sectionService.add(section).subscribe();
+        this.sectionService.add(section)
+          .flatMap(sectionId => this.sectionService.get(sectionId))
+          .subscribe(section => {
+            this.added.emit(section);
+          });
       }
       this.section = new Section();
     });
