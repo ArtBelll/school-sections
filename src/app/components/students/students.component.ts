@@ -22,7 +22,8 @@ export class StudentsComponent implements OnInit {
     'lastName',
     'classNumber',
     'classCharacter',
-    'sections'
+    'sections',
+    'actions'
   ];
 
   constructor(private studentService: StudentService, private sectionService: SectionService) {

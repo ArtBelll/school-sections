@@ -15,7 +15,7 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule, MatIconModule,
-  MatInputModule,
+  MatInputModule, MatMenuModule,
   MatPaginator,
   MatPaginatorModule,
   MatTabsModule
@@ -26,6 +26,7 @@ import {FormsModule} from '@angular/forms';
 import {AddSectionComponent, AddSectionComponentDialog} from './components/add-section/add-section.component';
 import { StudentsComponent } from './components/students/students.component';
 import { SectionsComponent } from './components/sections/sections.component';
+import { StudentActionsComponent } from './components/student-actions/student-actions.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SectionsComponent } from './components/sections/sections.component';
     AddSectionComponent,
     AddSectionComponentDialog,
     StudentsComponent,
-    SectionsComponent
+    SectionsComponent,
+    StudentActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { SectionsComponent } from './components/sections/sections.component';
     FormsModule,
     MatCheckboxModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [
     SectionService,
