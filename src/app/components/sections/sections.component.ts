@@ -34,4 +34,10 @@ export class SectionsComponent implements OnInit {
     newData.unshift(section);
     this.dataSource.data = newData;
   }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 }

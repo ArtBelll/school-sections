@@ -59,4 +59,10 @@ export class StudentsComponent implements OnInit {
     newData.splice(index, 1);
     this.dataSource.data = newData;
   }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 }
