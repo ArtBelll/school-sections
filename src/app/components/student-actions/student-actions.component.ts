@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {StudentService} from '../../client/student.service';
 import {SectionService} from '../../client/section.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
@@ -16,6 +16,8 @@ import {SelectSectionsDialogComponent} from '../../dialogs/select-sections-dialo
 export class StudentActionsComponent implements OnInit {
 
   @Input() student: Student;
+
+  @Output() deleted = new EventEmitter<number>();
 
   constructor(private studentService: StudentService,
               private sectionService: SectionService,
@@ -64,8 +66,10 @@ export class StudentActionsComponent implements OnInit {
       .subscribe(student => this.refreshStudent(student));
   }
 
-  delete() {
-
+  delete(studentId: number) {
+    this.studentService.delete(studentId).subscribe(() => {
+      this.deleted.emit(studentId);
+    });
   }
 
   private refreshStudent(student: Student) {

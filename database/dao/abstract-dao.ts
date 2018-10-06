@@ -62,6 +62,7 @@ export abstract class AbstractDao {
     ipcMain.on(channel.send, (event, arg, msgId) => {
       this.session.select('*')
         .from(this.getChannel().getTableName())
+        .orderBy('id', 'desc')
         .then(values => {
           event.sender.send(channel.on + ':' + msgId, values);
         });

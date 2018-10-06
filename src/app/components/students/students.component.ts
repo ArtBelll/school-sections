@@ -53,4 +53,10 @@ export class StudentsComponent implements OnInit {
     this.dataSource.data = newData;
   }
 
+  onDeletedStudent(studentId: number) {
+    let newData = this.dataSource.data;
+    const index = newData.findIndex(student => student.id == studentId);
+    newData.splice(index, 1);
+    this.dataSource.data = newData;
+  }
 }

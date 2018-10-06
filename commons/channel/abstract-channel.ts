@@ -7,12 +7,14 @@ export abstract class AbstractChannel {
   channelFindOne: MethodChannel;
   channelGetAll: MethodChannel;
   channelUpdate: MethodChannel;
+  channelDelete: MethodChannel;
 
   protected constructor() {
     this.channelInsert = this.getChannelName('insert');
     this.channelFindOne = this.getChannelName('find-one');
     this.channelGetAll = this.getChannelName('get-all');
     this.channelUpdate = this.getChannelName('update');
+    this.channelDelete = this.getChannelName('delete')
   }
 
   protected getChannelName(method: string): MethodChannel {

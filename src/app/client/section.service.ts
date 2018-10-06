@@ -3,8 +3,6 @@ import {Section} from '../../../commons/domain/section';
 import {SectionChannel} from '../../../commons/channel/section-channel';
 import {DbClient} from './db-client';
 import {Observable} from 'rxjs/Observable';
-import {Student} from '../../../commons/domain/student';
-
 
 @Injectable()
 export class SectionService {

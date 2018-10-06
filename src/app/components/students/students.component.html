@@ -40,7 +40,10 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <app-student-actions [student]="element"></app-student-actions>
+          <app-student-actions
+            [student]="element"
+            (deleted)="onDeletedStudent($event)">
+          </app-student-actions>
         </mat-cell>
       </ng-container>
 
