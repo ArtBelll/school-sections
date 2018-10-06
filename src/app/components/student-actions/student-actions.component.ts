@@ -7,6 +7,8 @@ import {isUndefined} from 'util';
 import 'rxjs/add/operator/filter';
 import {StudentDialogComponent} from '../../dialogs/student-dialog/student-dialog.component';
 import {SelectSectionsDialogComponent} from '../../dialogs/select-sections-dialog/select-sections-dialog.component';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-student-actions',
@@ -36,11 +38,22 @@ export class StudentActionsComponent implements OnInit {
         },
         data: {
           sections: sections,
-          student: `${this.student.firstName} ${this.student.lastName}`
+          student: this.student
         }
       }).afterClosed())
+      .filter(sections => sections)
+      .mergeMap(sections => this.studentService
+        .addSectionsToStudent(this.student.id, sections.map(section => section.id))
+      )
+      .mergeMap(sectionIds => {
+        const sectionsObs = sectionIds.map(sectionId => this.sectionService.get(sectionId));
+        return Observable.forkJoin(sectionsObs);
+      })
       .subscribe(sections => {
-        console.log(sections);
+        if (!this.student.sections) {
+          this.student.sections = [];
+        }
+        Array.prototype.push.apply(this.student.sections, sections);
       });
   }
 

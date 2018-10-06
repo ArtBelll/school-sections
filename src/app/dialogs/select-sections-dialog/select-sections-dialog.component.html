@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Добавить секции для {{data.student}}</h1>
+<h1 mat-dialog-title>Добавить секции для {{data.student.firstName}} {{data.student.lastName}}</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-select [formControl]="sectionCtrl" placeholder="Секции" [multiple]="true">

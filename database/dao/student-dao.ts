@@ -3,7 +3,7 @@ import {StudentChannel} from '../../commons/channel/student-channel';
 import {AbstractDao} from './abstract-dao';
 import {AbstractChannel} from '../../commons/channel/abstract-channel';
 import {ipcMain} from 'electron';
-import {log} from '../../logs-setting';
+import {StudentSectionsDTO} from '../dto/student-sections-dto';
 
 export class StudentDao extends AbstractDao {
 
@@ -14,13 +14,14 @@ export class StudentDao extends AbstractDao {
     this.studentChannel = new StudentChannel();
     this.initCommonChannels();
     this.initDelete();
+    this.initAddSections();
   }
 
 
   private initDelete() {
     const channel = this.studentChannel.channelDelete;
     ipcMain.on(channel.send, (event, studentId, msgId) => {
-      return this.getSession()
+      this.getSession()
         .delete()
         .from(this.studentChannel.getTableName())
         .where('id', studentId)
@@ -33,6 +34,22 @@ export class StudentDao extends AbstractDao {
               .then();
             event.sender.send(channel.on + ':' + msgId);
           }
+        });
+    });
+  }
+
+  private initAddSections() {
+    const channel = this.studentChannel.channelAddSections;
+    ipcMain.on(channel.send, (event, dto: StudentSectionsDTO, msgId) => {
+      const insertRows = dto.sectionIds
+        .map(sectionId => {
+          return {studentId: dto.studentId, sectionId: sectionId};
+        });
+      this.getSession()
+        .insert(insertRows)
+        .into('section_student')
+        .then(() => {
+          event.sender.send(channel.on + ':' + msgId, dto.sectionIds);
         });
     });
   }

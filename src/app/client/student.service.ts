@@ -3,6 +3,7 @@ import {StudentChannel} from '../../../commons/channel/student-channel';
 import {DbClient} from './db-client';
 import {Student} from '../../../commons/domain/student';
 import {Observable} from 'rxjs/Observable';
+import {StudentSectionsDTO} from '../../../database/dto/student-sections-dto';
 
 @Injectable()
 export class StudentService {
@@ -34,4 +35,13 @@ export class StudentService {
   public getAll(): Observable<Student[]> {
     return this.dbClient.do<Student[]>(this.studentChannel.channelGetAll);
   }
+
+  public addSectionsToStudent(studentId: number, sectionsIds: number[]): Observable<number[]> {
+    const arg: StudentSectionsDTO = {
+      studentId: studentId,
+      sectionIds: sectionsIds
+    };
+    return this.dbClient.do<number[]>(this.studentChannel.channelAddSections, arg);
+  }
+
 }
