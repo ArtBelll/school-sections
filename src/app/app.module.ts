@@ -14,14 +14,14 @@ import {MatTableModule} from '@angular/material/table';
 import {
   MatButtonModule,
   MatCheckboxModule,
-  MatDialogModule, MatIconModule,
+  MatDialogModule, MatFormFieldModule, MatIconModule,
   MatInputModule, MatMenuModule,
-  MatPaginatorModule,
+  MatPaginatorModule, MatSelectModule,
   MatTabsModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddStudentComponent} from './components/add-student/add-student.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AddSectionComponent} from './components/add-section/add-section.component';
 import {StudentsComponent} from './components/students/students.component';
 import {SectionsComponent} from './components/sections/sections.component';
@@ -31,6 +31,7 @@ import {
 import { StudentDialogComponent } from './dialogs/student-dialog/student-dialog.component';
 import { SectionDialogComponent } from './dialogs/section-dialog/section-dialog.component';
 import { SelectSectionsDialogComponent } from './dialogs/select-sections-dialog/select-sections-dialog.component';
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -60,7 +61,11 @@ import { SelectSectionsDialogComponent } from './dialogs/select-sections-dialog/
     MatCheckboxModule,
     MatTabsModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    NgxMatSelectSearchModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   providers: [
     SectionService,

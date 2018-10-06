@@ -28,17 +28,20 @@ export class StudentActionsComponent implements OnInit {
   }
 
   showSelectSectionsForm() {
-    let dialogRef = this.dialog.open(SelectSectionsDialogComponent, {
-      width: '300px',
-      position: {
-        top: '100px'
-      },
-      // data: {section: this.student}
-    });
-
-    dialogRef.afterClosed().subscribe(sections => {
-
-    });
+    this.sectionService.getAll()
+      .mergeMap(sections => this.dialog.open(SelectSectionsDialogComponent, {
+        width: '300px',
+        position: {
+          top: '100px'
+        },
+        data: {
+          sections: sections,
+          student: `${this.student.firstName} ${this.student.lastName}`
+        }
+      }).afterClosed())
+      .subscribe(sections => {
+        console.log(sections);
+      });
   }
 
   showEditForm() {
@@ -60,7 +63,7 @@ export class StudentActionsComponent implements OnInit {
       .filter(student => !isUndefined(student))
       .mergeMap(student => {
         student.id = this.student.id;
-        return this.studentService.update(student)
+        return this.studentService.update(student);
       })
       .mergeMap(id => this.studentService.get(id))
       .subscribe(student => this.refreshStudent(student));

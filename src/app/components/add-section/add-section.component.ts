@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {SectionService} from '../../client/section.service';
 import {Section} from '../../../../commons/domain/section';
-import {isUndefined} from "util";
+import {isUndefined} from 'util';
 import {SectionDialogComponent} from '../../dialogs/section-dialog/section-dialog.component';
 
 @Component({
@@ -24,24 +24,25 @@ export class AddSectionComponent implements OnInit {
   }
 
   showAddSectionForm() {
-    let dialogRef = this.dialog.open(SectionDialogComponent, {
+    this.dialog.open(SectionDialogComponent, {
       width: '300px',
       position: {
         top: '100px'
       },
       data: {section: this.section}
-    });
-
-    dialogRef.afterClosed().subscribe(section => {
-      if (this.validate(section)) {
-        this.sectionService.add(section)
-          .flatMap(sectionId => this.sectionService.get(sectionId))
-          .subscribe(section => {
-            this.added.emit(section);
-          });
-      }
-      this.section = new Section();
-    });
+    }).afterClosed()
+      .filter(section => this.validate(section))
+      .mergeMap(section => this.sectionService.add(section))
+      .mergeMap(sectionId => this.sectionService.get(sectionId))
+      .subscribe(section => {
+        this.added.emit(section);
+        this.section = new Section(
+          {
+            name: '',
+            isSport: false
+          }
+        );
+      });
   }
 
   validate(section: Section): boolean {

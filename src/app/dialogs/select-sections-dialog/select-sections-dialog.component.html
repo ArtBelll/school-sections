@@ -1,3 +1,22 @@
-<p>
-  select-sections-dialog works!
-</p>
+<h1 mat-dialog-title>Добавить секции для {{data.student}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-select [formControl]="sectionCtrl" placeholder="Секции" [multiple]="true">
+      <ngx-mat-select-search [formControl]="sectionFilterCtrl"></ngx-mat-select-search>
+      <mat-option *ngFor="let section of filteredSections | async" [value]="section">
+        {{section.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p>
+    Выбранные секции:
+  </p>
+  <ul *ngFor="let section of sectionCtrl?.value">
+    <li>{{section.name}}</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Отмена</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="sectionCtrl?.value" cdkFocusInitial>Добавить</button>
+</div>
