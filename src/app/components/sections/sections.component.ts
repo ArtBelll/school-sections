@@ -16,7 +16,8 @@ export class SectionsComponent implements OnInit {
   displayedColumns: string[] = [
     'position',
     'name',
-    'isSport'
+    'isSport',
+    'actions'
   ];
 
   constructor(private sectionService: SectionService) {

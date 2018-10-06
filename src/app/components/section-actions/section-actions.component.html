@@ -1,0 +1,14 @@
+<button class="f-r" mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button (click)="showEditForm()" mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    <span>Редактировать</span>
+  </button>
+  <!--<button (click)="delete(student.id)" mat-menu-item>-->
+    <!--<mat-icon>delete</mat-icon>-->
+    <!--<span>Удалить</span>-->
+  <!--</button>-->
+</mat-menu>
+

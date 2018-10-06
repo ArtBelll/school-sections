@@ -25,13 +25,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AddSectionComponent} from './components/add-section/add-section.component';
 import {StudentsComponent} from './components/students/students.component';
 import {SectionsComponent} from './components/sections/sections.component';
-import {
-  StudentActionsComponent
-} from './components/student-actions/student-actions.component';
+import {StudentActionsComponent} from './components/student-actions/student-actions.component';
 import { StudentDialogComponent } from './dialogs/student-dialog/student-dialog.component';
 import { SectionDialogComponent } from './dialogs/section-dialog/section-dialog.component';
 import { SelectSectionsDialogComponent } from './dialogs/select-sections-dialog/select-sections-dialog.component';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
+import { SectionActionsComponent } from './components/section-actions/section-actions.component';
 
 
 @NgModule({
@@ -46,6 +45,7 @@ import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
     StudentDialogComponent,
     SectionDialogComponent,
     SelectSectionsDialogComponent,
+    SectionActionsComponent,
   ],
   imports: [
     BrowserModule,

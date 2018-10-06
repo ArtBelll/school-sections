@@ -28,4 +28,7 @@ export class SectionService {
   public getSectionsByStudent(studentId: number): Observable<Section[]> {
     return this.dbClient.do<Section[]>(this.sectionChannel.channelGetSections, studentId);
   }
+  public update(section: Section): Observable<number> {
+    return this.dbClient.do<number>(this.sectionChannel.channelUpdate, section);
+  }
 }
