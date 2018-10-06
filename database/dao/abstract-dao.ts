@@ -16,6 +16,7 @@ export abstract class AbstractDao {
     this.initInsert();
     this.initFindOne();
     this.initSelectAll();
+    this.initUpdate();
   }
 
   protected abstract getChannel(): AbstractChannel;
@@ -67,4 +68,17 @@ export abstract class AbstractDao {
     });
   }
 
+  private initUpdate() {
+    const channel = this.getChannel().channelUpdate;
+    ipcMain.on(channel.send, (event, value, msgId) => {
+      const id = value.id;
+      value.id = undefined;
+      this.session.update(value)
+        .where('id', id)
+        .from(this.getChannel().getTableName())
+        .then(id => {
+          event.sender.send(channel.on + ':' + msgId, id);
+        });
+    });
+  }
 }

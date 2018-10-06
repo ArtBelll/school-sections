@@ -22,6 +22,11 @@ export class StudentService {
     return this.dbClient.do<Student>(this.studentChannel.channelFindOne, studentId);
   }
 
+  public update(student: Student): Observable<number> {
+    student.sections = undefined;
+    return this.dbClient.do<number>(this.studentChannel.channelUpdate, student);
+  }
+
   public getAll(): Observable<Student[]> {
     return this.dbClient.do<Student[]>(this.studentChannel.channelGetAll);
   }

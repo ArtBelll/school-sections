@@ -16,7 +16,6 @@ import {
   MatCheckboxModule,
   MatDialogModule, MatIconModule,
   MatInputModule, MatMenuModule,
-  MatPaginator,
   MatPaginatorModule,
   MatTabsModule
 } from '@angular/material';
@@ -24,9 +23,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddUserComponent, AddUserComponentDialog} from './components/add-user/add-user.component';
 import {FormsModule} from '@angular/forms';
 import {AddSectionComponent, AddSectionComponentDialog} from './components/add-section/add-section.component';
-import { StudentsComponent } from './components/students/students.component';
-import { SectionsComponent } from './components/sections/sections.component';
-import { StudentActionsComponent } from './components/student-actions/student-actions.component';
+import {StudentsComponent} from './components/students/students.component';
+import {SectionsComponent} from './components/sections/sections.component';
+import {
+  EditStudentComponentDialog,
+  SelectSectionsComponentDialog,
+  StudentActionsComponent
+} from './components/student-actions/student-actions.component';
 
 
 @NgModule({
@@ -39,7 +42,9 @@ import { StudentActionsComponent } from './components/student-actions/student-ac
     AddSectionComponentDialog,
     StudentsComponent,
     SectionsComponent,
-    StudentActionsComponent
+    StudentActionsComponent,
+    SelectSectionsComponentDialog,
+    EditStudentComponentDialog
   ],
   imports: [
     BrowserModule,
@@ -65,7 +70,9 @@ import { StudentActionsComponent } from './components/student-actions/student-ac
   bootstrap: [AppComponent],
   entryComponents: [
     AddUserComponentDialog,
-    AddSectionComponentDialog
+    AddSectionComponentDialog,
+    SelectSectionsComponentDialog,
+    EditStudentComponentDialog
   ]
 })
 export class AppModule {

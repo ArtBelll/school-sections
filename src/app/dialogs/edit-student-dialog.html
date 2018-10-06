@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Добавить ученика</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.student.firstName" placeholder="Имя">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.student.lastName" placeholder="Фамилия">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.student.classNumber" placeholder="Класс">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.student.classCharacter" placeholder="Буква">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Отмена</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="data.student" cdkFocusInitial>Добовить</button>
+</div>

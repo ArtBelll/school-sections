@@ -2,15 +2,15 @@
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
+  <button (click)="showSelectSectionsForm()" mat-menu-item>
     <mat-icon>add</mat-icon>
     <span>Добавить секции</span>
   </button>
-  <button mat-menu-item>
+  <button (click)="showEditForm()" mat-menu-item>
     <mat-icon>edit</mat-icon>
     <span>Редактировать</span>
   </button>
-  <button mat-menu-item>
+  <button (click)="delete()" mat-menu-item>
     <mat-icon>delete</mat-icon>
     <span>Удалить</span>
   </button>
