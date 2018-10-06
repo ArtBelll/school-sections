@@ -20,7 +20,7 @@ import {
   MatTabsModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AddUserComponent, AddUserComponentDialog} from './components/add-user/add-user.component';
+import {AddStudentComponent, AddUserComponentDialog} from './components/add-student/add-student.component';
 import {FormsModule} from '@angular/forms';
 import {AddSectionComponent, AddSectionComponentDialog} from './components/add-section/add-section.component';
 import {StudentsComponent} from './components/students/students.component';
@@ -36,7 +36,7 @@ import {
   declarations: [
     AppComponent,
     MainComponent,
-    AddUserComponent,
+    AddStudentComponent,
     AddUserComponentDialog,
     AddSectionComponent,
     AddSectionComponentDialog,

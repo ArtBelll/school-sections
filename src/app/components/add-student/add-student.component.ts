@@ -5,11 +5,11 @@ import {StudentService} from '../../client/student.service';
 import {isUndefined} from 'util';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  selector: 'app-add-student',
+  templateUrl: './add-student.component.html',
+  styleUrls: ['./add-student.component.css']
 })
-export class AddUserComponent implements OnInit {
+export class AddStudentComponent implements OnInit {
 
   @Output() added = new EventEmitter<Student>();
 

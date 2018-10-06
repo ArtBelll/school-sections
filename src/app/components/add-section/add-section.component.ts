@@ -4,7 +4,7 @@ import {Student} from '../../../../commons/domain/student';
 import {StudentService} from '../../client/student.service';
 import {SectionService} from '../../client/section.service';
 import {Section} from '../../../../commons/domain/section';
-import {AddUserComponentDialog} from '../add-user/add-user.component';
+import {AddUserComponentDialog} from '../add-student/add-user.component';
 import {isUndefined} from "util";
 
 @Component({
