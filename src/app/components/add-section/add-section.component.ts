@@ -1,11 +1,9 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {Student} from '../../../../commons/domain/student';
-import {StudentService} from '../../client/student.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {SectionService} from '../../client/section.service';
 import {Section} from '../../../../commons/domain/section';
-import {AddUserComponentDialog} from '../add-student/add-user.component';
 import {isUndefined} from "util";
+import {SectionDialogComponent} from '../../dialogs/section-dialog/section-dialog.component';
 
 @Component({
   selector: 'app-add-section',
@@ -26,7 +24,7 @@ export class AddSectionComponent implements OnInit {
   }
 
   showAddSectionForm() {
-    let dialogRef = this.dialog.open(AddSectionComponentDialog, {
+    let dialogRef = this.dialog.open(SectionDialogComponent, {
       width: '300px',
       position: {
         top: '100px'
@@ -51,19 +49,3 @@ export class AddSectionComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: 'app-add-section-dialog',
-  templateUrl: '../../dialogs/add-section-dialog.html',
-})
-export class AddSectionComponentDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<AddSectionComponentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}

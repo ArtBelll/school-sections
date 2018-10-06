@@ -16,5 +16,7 @@
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onNoClick()">Отмена</button>
   <button mat-raised-button color="primary"
-          [mat-dialog-close]="data.student" cdkFocusInitial>Добовить</button>
+          [mat-dialog-close]="data.student" cdkFocusInitial>
+    {{ data.edit ? 'Изменить' : 'Добавить' }}
+  </button>
 </div>

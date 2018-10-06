@@ -76,7 +76,10 @@ export abstract class AbstractDao {
       this.session.update(value)
         .where('id', id)
         .from(this.getChannel().getTableName())
-        .then(id => {
+        .then(result => {
+          if (result == 0) {
+            return;
+          }
           event.sender.send(channel.on + ':' + msgId, id);
         });
     });

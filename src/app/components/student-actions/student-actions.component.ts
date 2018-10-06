@@ -5,6 +5,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Student, StudentInfo} from '../../../../commons/domain/student';
 import {isUndefined} from 'util';
 import 'rxjs/add/operator/filter';
+import {StudentDialogComponent} from '../../dialogs/student-dialog/student-dialog.component';
+import {SelectSectionsDialogComponent} from '../../dialogs/select-sections-dialog/select-sections-dialog.component';
 
 @Component({
   selector: 'app-student-actions',
@@ -24,7 +26,7 @@ export class StudentActionsComponent implements OnInit {
   }
 
   showSelectSectionsForm() {
-    let dialogRef = this.dialog.open(SelectSectionsComponentDialog, {
+    let dialogRef = this.dialog.open(SelectSectionsDialogComponent, {
       width: '300px',
       position: {
         top: '100px'
@@ -44,12 +46,12 @@ export class StudentActionsComponent implements OnInit {
       classNumber: this.student.classNumber,
       classCharacter: this.student.classCharacter
     };
-    let dialogRef = this.dialog.open(EditStudentComponentDialog, {
+    let dialogRef = this.dialog.open(StudentDialogComponent, {
       width: '300px',
       position: {
         top: '100px'
       },
-      data: {student: new Student(studentInfo)}
+      data: {student: new Student(studentInfo), edit: true}
     });
 
     dialogRef.afterClosed()
@@ -73,38 +75,3 @@ export class StudentActionsComponent implements OnInit {
     this.student.classCharacter = student.classCharacter;
   }
 }
-
-@Component({
-  selector: 'app-select-sections-dialog',
-  templateUrl: '../../dialogs/select-sections-dialog.html',
-})
-export class SelectSectionsComponentDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<SelectSectionsComponentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'app-edit-student-dialog',
-  templateUrl: '../../dialogs/edit-student-dialog.html',
-})
-export class EditStudentComponentDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<EditStudentComponentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
-

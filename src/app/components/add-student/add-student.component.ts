@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {Student} from '../../../../commons/domain/student';
 import {StudentService} from '../../client/student.service';
 import {isUndefined} from 'util';
+import {StudentDialogComponent} from '../../dialogs/student-dialog/student-dialog.component';
 
 @Component({
   selector: 'app-add-student',
@@ -23,7 +24,7 @@ export class AddStudentComponent implements OnInit {
   }
 
   showAddUserForm() {
-    let dialogRef = this.dialog.open(AddUserComponentDialog, {
+    let dialogRef = this.dialog.open(StudentDialogComponent, {
       width: '300px',
       position: {
         top: '100px'
@@ -43,26 +44,9 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  validate(student: Student): boolean {
+  private validate(student: Student): boolean {
     return !isUndefined(student) && !isUndefined(student.firstName)
       && !isUndefined(student.lastName) && !isUndefined(student.classNumber)
       && !isUndefined(student.classCharacter);
   }
-}
-
-@Component({
-  selector: 'app-add-user-dialog',
-  templateUrl: '../../dialogs/add-user-dialog.html',
-})
-export class AddUserComponentDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<AddUserComponentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close(false);
-  }
-
 }
