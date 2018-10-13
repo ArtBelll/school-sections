@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {SectionService} from '../../client/section.service';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Section} from '../../../../commons/domain/section';
+import {SectionObservable} from "../../observable/SectionObservable";
 
 @Component({
   selector: 'app-sections',
@@ -20,7 +21,8 @@ export class SectionsComponent implements OnInit {
     'actions'
   ];
 
-  constructor(private sectionService: SectionService) {
+  constructor(private sectionService: SectionService,
+              private sectionObservable:SectionObservable) {
   }
 
   ngOnInit() {
@@ -36,9 +38,19 @@ export class SectionsComponent implements OnInit {
     this.dataSource.data = newData;
   }
 
+  onDeletedSection(sectionId: number) {
+    let newData = this.dataSource.data;
+    const index = newData.findIndex(section => section.id == sectionId);
+    newData.splice(index, 1);
+    this.dataSource.data = newData;
+    this.sectionObservable.deleteSectionEmit();
+
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
+
 }

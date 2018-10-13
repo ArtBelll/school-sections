@@ -26,7 +26,9 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <app-section-actions [section]="element">
+          <app-section-actions
+            [section]="element"
+            (deleted)="onDeletedSection($event)">
 
             <!--(deleted)="onDeletedStudent($event)">-->
           </app-section-actions>

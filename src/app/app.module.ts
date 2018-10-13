@@ -32,6 +32,7 @@ import { SelectSectionsDialogComponent } from './dialogs/select-sections-dialog/
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { SectionActionsComponent } from './components/section-actions/section-actions.component';
 import { DeleteSectionDialogComponent } from './dialogs/delete-section-dialog/delete-section-dialog.component';
+import {SectionObservable} from "./observable/SectionObservable";
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { DeleteSectionDialogComponent } from './dialogs/delete-section-dialog/de
   providers: [
     SectionService,
     StudentService,
-    DbClient
+    DbClient,
+    SectionObservable
   ],
   bootstrap: [AppComponent],
   entryComponents: [

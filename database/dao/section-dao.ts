@@ -14,8 +14,28 @@ export class SectionDao extends AbstractDao {
     this.sectionChannel = new SectionChannel();
     this.initCommonChannels();
     this.initGetSectionsByStudent();
+    this.initDelete();
   }
 
+  private initDelete() {
+    const channel = this.sectionChannel.channelDelete;
+    ipcMain.on(channel.send, (event, sectionId, msgId) => {
+      this.getSession()
+        .delete()
+        .from(this.sectionChannel.getTableName())
+        .where('id', sectionId)
+        .then(result => {
+          if (result > 0) {
+            this.getSession()
+              .delete()
+              .from('section_student')
+              .where('sectionId', sectionId)
+              .then();
+            event.sender.send(channel.on + ':' + msgId);
+          }
+        });
+    });
+  }
   private initGetSectionsByStudent() {
     const channel = this.sectionChannel.channelGetSections;
     ipcMain.on(channel.send, (event, studentId, msgId) => {

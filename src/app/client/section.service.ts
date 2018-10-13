@@ -31,4 +31,8 @@ export class SectionService {
   public update(section: Section): Observable<number> {
     return this.dbClient.do<number>(this.sectionChannel.channelUpdate, section);
   }
+  public delete(sectionId: number): Observable<void> {
+    console.log(sectionId)
+    return this.dbClient.do<void>(this.sectionChannel.channelDelete, sectionId);
+  }
 }
