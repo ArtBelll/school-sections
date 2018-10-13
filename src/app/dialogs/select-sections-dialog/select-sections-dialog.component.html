@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <app-select-sections [student]="data.student"
                        [sectionsSource]="data.sections"
-                       (selected)="noSelected($event)"></app-select-sections>
+                       (selected)="onSelected($event)"></app-select-sections>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onNoClick()">Отмена</button>

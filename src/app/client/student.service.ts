@@ -15,8 +15,9 @@ export class StudentService {
   }
 
   public add(student: Student): Observable<number> {
+    student.sections = undefined;
     student.classCharacter = student.classCharacter.toUpperCase();
-    return this.dbClient.do(this.studentChannel.channelInsert, student);
+    return this.dbClient.do<number>(this.studentChannel.channelInsert, student);
   }
 
   public get(studentId: number): Observable<Student> {

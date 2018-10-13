@@ -4,6 +4,8 @@ import {Student} from '../../../../commons/domain/student';
 import {StudentService} from '../../client/student.service';
 import {isUndefined} from 'util';
 import {StudentDialogComponent} from '../../dialogs/student-dialog/student-dialog.component';
+import {SectionService} from '../../client/section.service';
+import {ClientHelper} from '../../client/client-helper';
 
 @Component({
   selector: 'app-add-student',
@@ -17,6 +19,8 @@ export class AddStudentComponent implements OnInit {
   student = new Student();
 
   constructor(private studentService: StudentService,
+              private sectionService: SectionService,
+              private clientHelper: ClientHelper,
               private dialog: MatDialog) {
   }
 
@@ -24,24 +28,20 @@ export class AddStudentComponent implements OnInit {
   }
 
   showAddUserForm() {
-    let dialogRef = this.dialog.open(StudentDialogComponent, {
-      width: '300px',
-      position: {
-        top: '100px'
-      },
-      data: {student: this.student}
-    });
-
-    dialogRef.afterClosed().subscribe(student => {
-      if (this.validate(student)) {
-        this.studentService.add(student)
-          .flatMap(studentId => this.studentService.get(studentId))
-          .subscribe(result => {
-            this.added.emit(result);
-          });
-      }
-      this.student = new Student();
-    });
+    this.sectionService.getAll()
+      .mergeMap(sections => this.dialog.open(StudentDialogComponent, {
+        width: '300px',
+        position: {
+          top: '100px'
+        },
+        data: {student: this.student, sections: sections}
+      }).afterClosed())
+      .filter(student => this.validate(student))
+      .mergeMap(student => {
+        this.student = new Student();
+        return this.clientHelper.addStudentWithSections(student);
+      })
+      .subscribe(student => this.added.emit(student));
   }
 
   private validate(student: Student): boolean {

@@ -33,6 +33,7 @@ import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { SectionActionsComponent } from './components/section-actions/section-actions.component';
 import { DeleteSectionDialogComponent } from './dialogs/delete-section-dialog/delete-section-dialog.component';
 import { SelectSectionsComponent } from './components/select-sections/select-sections.component';
+import {ClientHelper} from './client/client-helper';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { SelectSectionsComponent } from './components/select-sections/select-sec
   providers: [
     SectionService,
     StudentService,
-    DbClient
+    DbClient,
+    ClientHelper
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -15,7 +15,7 @@ export class SelectSectionsDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  noSelected(sections: Section[]) {
+  onSelected(sections: Section[]) {
     this.sectionsCtrl = sections;
   }
 

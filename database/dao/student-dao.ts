@@ -18,7 +18,6 @@ export class StudentDao extends AbstractDao {
     this.initDeleteSections();
   }
 
-
   private initDelete() {
     const channel = this.studentChannel.channelDelete;
     ipcMain.on(channel.send, (event, studentId, msgId) => {
