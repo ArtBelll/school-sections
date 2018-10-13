@@ -15,6 +15,8 @@ export class StudentsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('filter') filter: ElementRef;
 
+  studentsSource: Student[];
+
   dataSource: MatTableDataSource<Student>;
   displayedColumns: string[] = [
     'position',
@@ -33,10 +35,11 @@ export class StudentsComponent implements OnInit {
     this.studentService.getAll()
       .subscribe(students => {
         students
-          .map(student => this.sectionService.getSectionsByStudent(student.id)
+          .forEach(student => this.sectionService.getSectionsByStudent(student.id)
             .subscribe(sections => {
               student.sections = sections;
             }));
+        this.studentsSource = students;
         this.dataSource = new MatTableDataSource<Student>(students);
         this.dataSource.paginator = this.paginator;
       });
@@ -50,13 +53,16 @@ export class StudentsComponent implements OnInit {
   onAddedStudent(student: Student) {
     let newData = this.dataSource.data;
     newData.unshift(student);
+    this.studentsSource.unshift(student);
     this.dataSource.data = newData;
   }
 
   onDeletedStudent(studentId: number) {
     let newData = this.dataSource.data;
-    const index = newData.findIndex(student => student.id == studentId);
-    newData.splice(index, 1);
+    const indexDS = newData.findIndex(student => student.id == studentId);
+    const indexSS = this.studentsSource.findIndex(student => student.id == studentId);
+    newData.splice(indexDS, 1);
+    this.studentsSource.splice(indexSS, 1);
     this.dataSource.data = newData;
   }
 
@@ -64,5 +70,9 @@ export class StudentsComponent implements OnInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  onFiltered(predicate: (students: Student) => boolean) {
+    this.dataSource.data = this.studentsSource.filter(predicate);
   }
 }

@@ -34,6 +34,7 @@ import { SectionActionsComponent } from './components/section-actions/section-ac
 import { DeleteSectionDialogComponent } from './dialogs/delete-section-dialog/delete-section-dialog.component';
 import { SelectSectionsComponent } from './components/select-sections/select-sections.component';
 import {ClientHelper} from './client/client-helper';
+import { StudentsFilterComponent } from './components/students-filter/students-filter.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {ClientHelper} from './client/client-helper';
     SectionActionsComponent,
     DeleteSectionDialogComponent,
     SelectSectionsComponent,
+    StudentsFilterComponent,
   ],
   imports: [
     BrowserModule,
