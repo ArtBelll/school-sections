@@ -36,12 +36,19 @@ export class StudentService {
     return this.dbClient.do<Student[]>(this.studentChannel.channelGetAll);
   }
 
-  public addSectionsToStudent(studentId: number, sectionsIds: number[]): Observable<number[]> {
+  public addSectionsToStudent(studentId: number, sectionIds: number[]): Observable<number[]> {
     const arg: StudentSectionsDTO = {
       studentId: studentId,
-      sectionIds: sectionsIds
+      sectionIds: sectionIds
     };
     return this.dbClient.do<number[]>(this.studentChannel.channelAddSections, arg);
   }
 
+  public deleteSectionsFromStudent(studentId: number, sectionIds: number[]): Observable<number> {
+    const arg: StudentSectionsDTO = {
+      studentId: studentId,
+      sectionIds: sectionIds
+    };
+    return this.dbClient.do<number>(this.studentChannel.channelDeleteSections, arg);
+  }
 }

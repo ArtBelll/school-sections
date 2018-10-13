@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {StudentService} from '../../client/student.service';
 import {SectionService} from '../../client/section.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {Student, StudentInfo} from '../../../../commons/domain/student';
 import {isUndefined} from 'util';
 import 'rxjs/add/operator/filter';
@@ -9,6 +9,7 @@ import {StudentDialogComponent} from '../../dialogs/student-dialog/student-dialo
 import {SelectSectionsDialogComponent} from '../../dialogs/select-sections-dialog/select-sections-dialog.component';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
+import {DeleteSectionDialogComponent} from '../../dialogs/delete-section-dialog/delete-section-dialog.component';
 
 @Component({
   selector: 'app-student-actions',
@@ -55,6 +56,21 @@ export class StudentActionsComponent implements OnInit {
         }
         Array.prototype.push.apply(this.student.sections, sections);
       });
+  }
+
+  showDeleteSectionsForm() {
+   this.dialog.open(DeleteSectionDialogComponent, {
+      width: '300px',
+      position: {
+        top: '100px'
+      },
+      data: {student: this.student}
+    }).afterClosed()
+      .filter(sectionIds => sectionIds)
+      .mergeMap(sectionIds => this.studentService
+        .deleteSectionsFromStudent(this.student.id, sectionIds))
+      .mergeMap(studentId => this.sectionService.getSectionsByStudent(studentId))
+      .subscribe(sections => this.student.sections = sections);
   }
 
   showEditForm() {

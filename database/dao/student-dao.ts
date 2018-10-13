@@ -15,6 +15,7 @@ export class StudentDao extends AbstractDao {
     this.initCommonChannels();
     this.initDelete();
     this.initAddSections();
+    this.initDeleteSections();
   }
 
 
@@ -51,6 +52,21 @@ export class StudentDao extends AbstractDao {
         .then(() => {
           event.sender.send(channel.on + ':' + msgId, dto.sectionIds);
         });
+    });
+  }
+
+  private initDeleteSections() {
+    const channel = this.studentChannel.channelDeleteSections;
+    ipcMain.on(channel.send, (event, dto: StudentSectionsDTO, msgId) => {
+      this.getSession()
+        .delete()
+        .from('section_student')
+        .where('studentId', dto.studentId)
+        .whereIn('sectionId', dto.sectionIds)
+        .then(() => {
+          event.sender.send(channel.on + ':' + msgId, dto.studentId);
+        })
+        .catch(e => console.log(e));
     });
   }
 

@@ -31,6 +31,7 @@ import { SectionDialogComponent } from './dialogs/section-dialog/section-dialog.
 import { SelectSectionsDialogComponent } from './dialogs/select-sections-dialog/select-sections-dialog.component';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { SectionActionsComponent } from './components/section-actions/section-actions.component';
+import { DeleteSectionDialogComponent } from './dialogs/delete-section-dialog/delete-section-dialog.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { SectionActionsComponent } from './components/section-actions/section-ac
     SectionDialogComponent,
     SelectSectionsDialogComponent,
     SectionActionsComponent,
+    DeleteSectionDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { SectionActionsComponent } from './components/section-actions/section-ac
   entryComponents: [
     StudentDialogComponent,
     SectionDialogComponent,
-    SelectSectionsDialogComponent
+    SelectSectionsDialogComponent,
+    DeleteSectionDialogComponent
   ]
 })
 export class AppModule {
