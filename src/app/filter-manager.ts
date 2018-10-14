@@ -1,20 +1,27 @@
 import {Student} from '../../commons/domain/student';
+import {Section} from '../../commons/domain/section';
 
 export interface FilterManagerOptions {
   classFrom?: number;
   classTo?: number;
   classCharacter?: string;
+  isSport?: boolean;
+  section?: string;
 }
 
 export class FilterManager {
   classFrom: number;
   classTo: number;
   classCharacter: string;
+  isSport: boolean;
+  section: string;
 
   constructor(fmo: FilterManagerOptions) {
     this.classFrom = fmo.classFrom;
     this.classTo = fmo.classTo;
     this.classCharacter = fmo.classCharacter;
+    this.isSport = fmo.isSport;
+    this.section = fmo.section;
   }
 
   resolvePredicates(): (student: Student) => boolean {
@@ -26,6 +33,13 @@ export class FilterManager {
     if (this.classCharacter) {
       predicates.push(this.getCharacterPredicate(this.classCharacter))
     }
+    if (this.isSport) {
+      predicates.push(this.getSportPredicate())
+    }
+    if (this.section) {
+      predicates.push(this.getSectionPredicate(this.section))
+    }
+
     return predicates.reduce((p1, p2) => this.and(p1, p2), student => true);
   }
 
@@ -39,5 +53,14 @@ export class FilterManager {
 
   private getCharacterPredicate(character: string): (student: Student) => boolean {
     return student => student.classCharacter === character;
+  }
+
+  private getSportPredicate(): (student: Student) => boolean {
+    return student => student.sections.some(section => section.isSport);
+  }
+
+  private getSectionPredicate(section: string): (student: Student) => boolean {
+    return student => student.sections.some(s =>
+      s.name.toUpperCase() === section.toUpperCase());
   }
 }

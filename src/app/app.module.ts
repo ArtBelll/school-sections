@@ -12,6 +12,7 @@ import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule, MatFormFieldModule, MatIconModule,
@@ -72,7 +73,8 @@ import { StudentsFilterComponent } from './components/students-filter/students-f
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatAutocompleteModule
   ],
   providers: [
     SectionService,
