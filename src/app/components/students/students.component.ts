@@ -53,8 +53,8 @@ export class StudentsComponent implements OnInit {
   onAddedStudent(student: Student) {
     let newData = this.dataSource.data;
     newData.unshift(student);
-    this.studentsSource.unshift(student);
     this.dataSource.data = newData;
+    this.studentsSource.unshift(student);
   }
 
   onDeletedStudent(studentId: number) {
@@ -62,8 +62,8 @@ export class StudentsComponent implements OnInit {
     const indexDS = newData.findIndex(student => student.id == studentId);
     const indexSS = this.studentsSource.findIndex(student => student.id == studentId);
     newData.splice(indexDS, 1);
-    this.studentsSource.splice(indexSS, 1);
     this.dataSource.data = newData;
+    this.studentsSource.splice(indexSS, 1);
   }
 
   applyFilter(filterValue: string) {
