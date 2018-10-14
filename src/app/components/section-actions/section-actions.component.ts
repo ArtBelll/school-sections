@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Section, SectionInfo} from "../../../../commons/domain/section";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {SectionDialogComponent} from "../../dialogs/section-dialog/section-dialog.component";
@@ -13,6 +13,7 @@ import {SectionService} from "../../client/section.service";
 export class SectionActionsComponent implements OnInit {
 
   @Input() section: Section;
+  @Output() deleted = new EventEmitter<number>();
 
   constructor(private dialog: MatDialog,
               private sectionService: SectionService) {
@@ -43,6 +44,12 @@ export class SectionActionsComponent implements OnInit {
       })
       .mergeMap(id => this.sectionService.get(id))
       .subscribe(section => this.refreshSection(section));
+  }
+  delete(sectionId: number) {
+    console.log(sectionId);
+    this.sectionService.delete(sectionId).subscribe(() => {
+      this.deleted.emit(sectionId);
+    });
   }
 
   private refreshSection(section: Section) {

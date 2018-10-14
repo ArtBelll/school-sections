@@ -4,6 +4,7 @@ import {Student} from '../../../../commons/domain/student';
 import {StudentService} from '../../client/student.service';
 import {SectionService} from '../../client/section.service';
 import {Section} from '../../../../commons/domain/section';
+import {SectionObservable} from "../../observable/SectionObservable";
 
 @Component({
   selector: 'app-students',
@@ -28,21 +29,15 @@ export class StudentsComponent implements OnInit {
     'actions'
   ];
 
-  constructor(private studentService: StudentService, private sectionService: SectionService) {
-  }
+  constructor(private studentService: StudentService,
+              private sectionService: SectionService,
+              private sectionObservable: SectionObservable) {}
 
   ngOnInit(): void {
-    this.studentService.getAll()
-      .subscribe(students => {
-        students
-          .forEach(student => this.sectionService.getSectionsByStudent(student.id)
-            .subscribe(sections => {
-              student.sections = sections;
-            }));
-        this.studentsSource = students;
-        this.dataSource = new MatTableDataSource<Student>(students);
-        this.dataSource.paginator = this.paginator;
-      });
+    this.initTable();
+    this.sectionObservable.deleteSectionEmitted.subscribe(bool => {
+        this.initTable();
+    })
   }
 
   joinSections(sections: Section[]): string {
@@ -66,10 +61,34 @@ export class StudentsComponent implements OnInit {
     this.studentsSource.splice(indexSS, 1);
   }
 
+  deleteStudents() {
+    this.studentsSource.forEach((item) => {
+      if (item.sections.length === 0 ) {
+        this.studentService.delete(item.id).subscribe(() => {
+          this.onDeletedStudent(item.id);
+        });
+      }
+    })
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  initTable() {
+    this.studentService.getAll()
+      .subscribe(students => {
+        students
+          .forEach(student => this.sectionService.getSectionsByStudent(student.id)
+            .subscribe(sections => {
+              student.sections = sections;
+            }));
+        this.studentsSource = students;
+        this.dataSource = new MatTableDataSource<Student>(students);
+        this.dataSource.paginator = this.paginator;
+      });
   }
 
   onFiltered(predicate: (students: Student) => boolean) {
