@@ -56,4 +56,13 @@ export class StudentsFilterComponent implements OnInit {
       option.toLowerCase().indexOf(val.toLowerCase()) === 0);
   }
 
+  clearFilters() {
+    this.classFrom = null;
+    this.classTo = null;
+    this.classCharacter = null;
+    this.isSport = false;
+    this.section.setValue('');
+
+    this.filter();
+  }
 }

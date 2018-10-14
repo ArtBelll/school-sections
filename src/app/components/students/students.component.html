@@ -4,7 +4,7 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
     </mat-form-field>
   </div>
-  <div>
+  <div class="col-md-12">
     <app-students-filter (filtered)="onFiltered($event)"></app-students-filter>
   </div>
   <div class="col-md-9">
