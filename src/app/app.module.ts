@@ -37,6 +37,7 @@ import {SectionObservable} from "./observable/SectionObservable";
 import { SelectSectionsComponent } from './components/select-sections/select-sections.component';
 import {ClientHelper} from './client/client-helper';
 import { StudentsFilterComponent } from './components/students-filter/students-filter.component';
+import { DeleteStudentComponent } from './components/delete-student/delete-student.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { StudentsFilterComponent } from './components/students-filter/students-f
     DeleteSectionDialogComponent,
     SelectSectionsComponent,
     StudentsFilterComponent,
+    DeleteStudentComponent,
   ],
   imports: [
     BrowserModule,

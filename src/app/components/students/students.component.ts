@@ -57,8 +57,18 @@ export class StudentsComponent implements OnInit {
     const indexDS = newData.findIndex(student => student.id == studentId);
     const indexSS = this.studentsSource.findIndex(student => student.id == studentId);
     newData.splice(indexDS, 1);
-    this.studentsSource.splice(indexSS, 1);
     this.dataSource.data = newData;
+    this.studentsSource.splice(indexSS, 1);
+  }
+
+  deleteStudents() {
+    this.studentsSource.forEach((item) => {
+      if (item.sections.length === 0 ) {
+        this.studentService.delete(item.id).subscribe(() => {
+          this.onDeletedStudent(item.id);
+        });
+      }
+    })
   }
 
   applyFilter(filterValue: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-delete-student',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteStudentComponent implements OnInit {
 
+  @Output() deleted = new EventEmitter<number>();
   constructor() { }
 
   ngOnInit() {
+  }
+  delete(){
+    this.deleted.emit();
   }
 
 }
