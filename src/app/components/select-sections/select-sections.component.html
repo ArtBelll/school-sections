@@ -1,0 +1,14 @@
+<mat-form-field>
+  <mat-select [formControl]="sectionCtrl" placeholder="Секции" [multiple]="true">
+    <ngx-mat-select-search [formControl]="sectionFilterCtrl"></ngx-mat-select-search>
+    <mat-option *ngFor="let section of filteredSections | async" [value]="section">
+      {{section.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<p>
+  Выбранные секции:
+</p>
+<ul *ngFor="let section of sectionCtrl?.value">
+  <li>{{section.name}}</li>
+</ul>

@@ -2,7 +2,6 @@ import {ipcMain} from 'electron';
 import {log} from '../../logs-setting';
 import {AbstractChannel} from '../../commons/channel/abstract-channel';
 import * as Knex from 'knex';
-import {Section} from '../../commons/domain/section';
 
 export abstract class AbstractDao {
 
@@ -29,7 +28,7 @@ export abstract class AbstractDao {
     return this.getChannel().getTableName();
   }
 
-  private initInsert() {
+  protected initInsert() {
     const channel = this.getChannel().channelInsert;
     ipcMain.on(channel.send, (event, value, msgId) => {
       log.info('Insert:', JSON.stringify(value));
@@ -45,7 +44,7 @@ export abstract class AbstractDao {
     });
   }
 
-  private initFindOne() {
+  protected initFindOne() {
     const channel = this.getChannel().channelFindOne;
     ipcMain.on(channel.send, (event, id, msgId) => {
       this.session.select('*')
@@ -57,7 +56,7 @@ export abstract class AbstractDao {
     });
   }
 
-  private initSelectAll() {
+  protected initSelectAll() {
     const channel = this.getChannel().channelGetAll;
     ipcMain.on(channel.send, (event, arg, msgId) => {
       this.session.select('*')
@@ -69,7 +68,7 @@ export abstract class AbstractDao {
     });
   }
 
-  private initUpdate() {
+  protected initUpdate() {
     const channel = this.getChannel().channelUpdate;
     ipcMain.on(channel.send, (event, value, msgId) => {
       const id = value.id;

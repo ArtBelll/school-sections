@@ -12,6 +12,7 @@ import {NgxElectronModule} from 'ngx-electron';
 
 import {MatTableModule} from '@angular/material/table';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule, MatFormFieldModule, MatIconModule,
@@ -33,6 +34,9 @@ import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { SectionActionsComponent } from './components/section-actions/section-actions.component';
 import { DeleteSectionDialogComponent } from './dialogs/delete-section-dialog/delete-section-dialog.component';
 import {SectionObservable} from "./observable/SectionObservable";
+import { SelectSectionsComponent } from './components/select-sections/select-sections.component';
+import {ClientHelper} from './client/client-helper';
+import { StudentsFilterComponent } from './components/students-filter/students-filter.component';
 
 
 @NgModule({
@@ -49,6 +53,8 @@ import {SectionObservable} from "./observable/SectionObservable";
     SelectSectionsDialogComponent,
     SectionActionsComponent,
     DeleteSectionDialogComponent,
+    SelectSectionsComponent,
+    StudentsFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,12 +74,14 @@ import {SectionObservable} from "./observable/SectionObservable";
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatAutocompleteModule
   ],
   providers: [
     SectionService,
     StudentService,
     DbClient,
+    ClientHelper,
     SectionObservable
   ],
   bootstrap: [AppComponent],
