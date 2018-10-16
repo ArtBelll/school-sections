@@ -1,6 +1,6 @@
 import * as Knex from 'knex';
 import {ipcMain} from 'electron';
-import {log} from '../../logs-setting';
+import log from 'electron-log';
 import {SectionChannel} from '../../commons/channel/section-channel';
 import {AbstractDao} from './abstract-dao';
 import {AbstractChannel} from '../../commons/channel/abstract-channel';

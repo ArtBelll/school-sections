@@ -1,10 +1,11 @@
 import Knex = require('knex');
 import {dialog} from 'electron';
-import {log} from '../logs-setting';
+import log from 'electron-log';
 
 export abstract class SessionCreator {
 
   static connection(filename: string): Knex {
+    log.info(filename);
     const session = Knex({
       client: 'sqlite3',
       connection: {

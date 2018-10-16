@@ -1,5 +1,7 @@
-import {app, BrowserWindow, dialog, ipcMain} from 'electron';
+import {app, BrowserWindow} from 'electron';
 import {Database} from './database/database';
+const path = require('path');
+const dbPath = path.resolve(process.resourcesPath, 'data.db');
 
 class SchoolSectionsApp {
 
@@ -26,7 +28,7 @@ class SchoolSectionsApp {
   }
 
   private connectionToDataBase() {
-    new Database(`${__dirname}/data.db`);
+    new Database(dbPath);
   }
 }
 

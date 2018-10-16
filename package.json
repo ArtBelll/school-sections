@@ -3,11 +3,31 @@
   "version": "0.0.0",
   "license": "MIT",
   "main": "main.js",
+  "author": "Artur Belogur <belogur.length@gmail.com>",
   "scripts": {
     "ng": "ng",
     "start": "ng build --base-href ./ && npm run electron",
-    "build": "ng build --prod",
-    "electron": "tsc -p tsconfig-electron.json && electron ."
+    "build-angular": "ng build --prod",
+    "electron": "tsc -p tsconfig-electron.json && electron .",
+    "pack": "build --dir",
+    "dist": "ng build --prod && build",
+    "postinstall": "install-app-deps"
+  },
+  "build": {
+    "appId": "ru.school.sections",
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    },
+    "files": [
+      "node_modules/**/*",
+      "database/**/*",
+      "commons/**/*",
+      "dist/*",
+      "main.js"
+    ],
+    "extraResources": ["data.db"]
   },
   "private": true,
   "dependencies": {
@@ -24,12 +44,11 @@
     "@angular/router": "^5.2.0",
     "@types/knex": "^0.14.24",
     "core-js": "^2.4.1",
-    "electron-builder": "^20.28.4",
+    "electron-log": "^2.2.17",
     "knex": "^0.15.2",
     "ngx-electron": "^1.0.4",
     "ngx-mat-select-search": "^1.4.1",
     "rxjs": "^5.5.6",
-    "simple-node-logger": "^0.93.40",
     "sqlite3": "^4.0.2",
     "zone.js": "^0.8.19"
   },
@@ -43,7 +62,7 @@
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
     "electron": "2.0.10",
-    "electron-rebuild": "^1.8.2",
+    "electron-builder": "^20.28.4",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",

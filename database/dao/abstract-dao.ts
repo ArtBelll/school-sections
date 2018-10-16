@@ -1,5 +1,5 @@
 import {ipcMain} from 'electron';
-import {log} from '../../logs-setting';
+import log from 'electron-log';
 import {AbstractChannel} from '../../commons/channel/abstract-channel';
 import * as Knex from 'knex';
 
