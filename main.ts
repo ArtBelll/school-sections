@@ -1,14 +1,19 @@
 import {app, BrowserWindow} from 'electron';
 import {Database} from './database/database';
+import * as fs from 'fs';
 const path = require('path');
-const dbPath = path.resolve(process.resourcesPath, 'data.db');
+
+const dbPathDev = path.resolve(__dirname, 'data.db');
+const dbPathProd = path.resolve(process.resourcesPath, 'data.db');
 
 class SchoolSectionsApp {
 
+  env: String;
   mainWindow: BrowserWindow;
 
   constructor() {
     this.mainWindow = this.createWindow();
+    this.env = fs.existsSync(dbPathDev) ? 'dev' : 'prod';
     this.connectionToDataBase()
   }
 
@@ -22,13 +27,12 @@ class SchoolSectionsApp {
 
     mainWindow.maximize();
     mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
-    mainWindow.webContents.openDevTools();
 
     return mainWindow;
   }
 
   private connectionToDataBase() {
-    new Database(dbPath);
+      this.env === 'dev' ? new Database(dbPathDev) : new Database(dbPathProd);
   }
 }
 
