@@ -2,6 +2,7 @@ import {app, BrowserWindow} from 'electron';
 import {Database} from './database/database';
 import * as fs from 'fs';
 const path = require('path');
+import { autoUpdater } from "electron-updater"
 
 const dbPathDev = path.resolve(__dirname, 'data.db');
 const dbPathProd = path.resolve(process.resourcesPath, 'data.db');
@@ -12,9 +13,11 @@ class SchoolSectionsApp {
   mainWindow: BrowserWindow;
 
   constructor() {
-    this.mainWindow = this.createWindow();
+    autoUpdater.checkForUpdatesAndNotify();
+
     this.env = fs.existsSync(dbPathDev) ? 'dev' : 'prod';
-    this.connectionToDataBase()
+    this.mainWindow = this.createWindow();
+    this.connectionToDataBase();
   }
 
   private createWindow(): BrowserWindow {
@@ -27,6 +30,9 @@ class SchoolSectionsApp {
 
     mainWindow.maximize();
     mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
+    if (this.env === 'dev') {
+      mainWindow.webContents.openDevTools();
+    }
 
     return mainWindow;
   }
@@ -42,6 +48,4 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-// ipcMain.on('test-insert', (event, section) => {
-//   console.log("TT");
-// });
+

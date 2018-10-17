@@ -1,6 +1,6 @@
 {
   "name": "school-sections",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "main.js",
   "author": "Artur Belogur <belogur.length@gmail.com>",
@@ -27,7 +27,10 @@
       "dist/*",
       "main.js"
     ],
-    "extraResources": ["data.db"]
+    "extraResources": [
+      "data.db"
+    ],
+    "publish": "github"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +48,7 @@
     "@types/knex": "^0.14.24",
     "core-js": "^2.4.1",
     "electron-log": "^2.2.17",
+    "electron-updater": "^3.1.2",
     "knex": "^0.15.2",
     "ngx-electron": "^1.0.4",
     "ngx-mat-select-search": "^1.4.1",
